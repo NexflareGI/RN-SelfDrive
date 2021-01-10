@@ -26,6 +26,7 @@ const SrpCard = React.memo((props) => {
     navigation,
     isActive,
     setActive,
+    index,
   } = props;
 
   const renderPackages = useCallback(() => {
@@ -72,7 +73,7 @@ const SrpCard = React.memo((props) => {
         styles.card_container,
         isActive ? styles.card_active : styles.card_inactive,
       ]}
-      onPress={() => setActive()}
+      onPress={() => setActive(index)}
     >
       <View style={styles.card_col} onStartShouldSetResponder={(event) => true}>
         <View style={styles.car_img_container}>

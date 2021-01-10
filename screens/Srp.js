@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import SrpCard from "../components/srp/SrpCard";
 import { getCars } from "../apis/srp";
@@ -16,6 +16,7 @@ function Srp(props) {
       })
       .catch((err) => setError(err.message));
   }, []);
+  const setActive = useCallback((index) => setActiveItem(index), []);
   return (
     <View style={styles.container}>
       {error.length > 0 ? (
@@ -27,9 +28,10 @@ function Srp(props) {
             renderItem={({ item, index }) => (
               <SrpCard
                 car={item}
+                index={index}
                 {...props}
                 isActive={activeItem === index ? true : false}
-                setActive={() => setActiveItem(index)}
+                setActive={setActive}
               />
             )}
             ListEmptyComponent={<Text>Empty List</Text>}
