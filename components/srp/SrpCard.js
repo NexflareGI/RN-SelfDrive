@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,37 +7,44 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { CarContext } from "../../context/CarContext";
 import Offering from "./Offering";
 import Package from "./Package";
 
 const SrpCard = React.memo((props) => {
+  const { navigation, isActive, setActive, index } = props;
+
   const {
-    car: {
-      img,
-      brand,
-      model,
-      transmission,
-      seater,
-      fuel_type,
-      vehicle_offerings = [],
-      packages = [],
-      selected_pkg_index,
-    },
-    navigation,
-    isActive,
-    setActive,
-    index,
-  } = props;
+    carState: { cars = [] },
+  } = useContext(CarContext);
 
   const renderPackages = useCallback(() => {
     return (
       <FlatList
         data={packages}
         keyExtractor={(item) => String(item.pricing_id)}
-        renderItem={({ item, index }) => <Package package={item} {...props} />}
+        renderItem={({ item, index }) => (
+          <Package package={item} {...props} packageIndex={index} />
+        )}
       ></FlatList>
     );
   });
+
+  const handlePress = useCallback((index) => {
+    setActive(index);
+  }, []);
+
+  const {
+    img,
+    brand,
+    model,
+    transmission,
+    seater,
+    fuel_type,
+    vehicle_offerings = [],
+    packages = [],
+    selected_pkg_index,
+  } = cars[index] || [];
 
   const renderInitialOffering = useCallback(() => {
     return (
@@ -55,14 +62,16 @@ const SrpCard = React.memo((props) => {
           <Text style={{ fontSize: 11, color: "#777777", textAlign: "right" }}>
             Starting From
           </Text>
-          <View style={styles.price_container}>
-            <Text style={styles.base_price}>
-              {packages[selected_pkg_index].base_fare}
-            </Text>
-            <Text style={styles.final_price}>
-              {packages[selected_pkg_index].total_amount}
-            </Text>
-          </View>
+          {packages.length > 0 ? (
+            <View style={styles.price_container}>
+              <Text style={styles.base_price}>
+                {packages[selected_pkg_index].base_fare}
+              </Text>
+              <Text style={styles.final_price}>
+                {packages[selected_pkg_index].total_amount}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </View>
     );
@@ -73,7 +82,7 @@ const SrpCard = React.memo((props) => {
         styles.card_container,
         isActive ? styles.card_active : styles.card_inactive,
       ]}
-      onPress={() => setActive(index)}
+      onPress={() => handlePress(index)}
     >
       <View style={styles.card_col} onStartShouldSetResponder={(event) => true}>
         <View style={styles.car_img_container}>

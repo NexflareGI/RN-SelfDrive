@@ -1,17 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import SrpCard from "../components/srp/SrpCard";
 import { getCars } from "../apis/srp";
 import ErrorBottomSheet from "../components/error/ErrorBottomSheet";
 import BottomFilterContainer from "../components/BottomFilter/BottomFilterContainer";
+import { CarContext, CarProvider } from "../context/CarContext";
 
 function Srp(props) {
   const [cars, setCars] = useState([]);
   const [error, setError] = useState("");
   const [activeItem, setActiveItem] = useState();
+  const { addCars } = useContext(CarContext);
   useEffect(() => {
     getCars()
       .then((response) => {
+        addCars(response);
         setCars(response);
       })
       .catch((err) => setError(err.message));

@@ -8,6 +8,7 @@ import Srp from "./screens/Srp";
 import { StyleSheet } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import TravellerInfo from "./screens/TravellerInfo";
+import { CarProvider } from "./context/CarContext";
 
 const { Screen, Navigator } = createStackNavigator();
 export default function App() {
@@ -19,27 +20,29 @@ export default function App() {
   const [isLoaded] = useFonts(customFonts);
 
   return (
-    <NavigationContainer>
-      <Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#2276e3",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "Quicksand-Bold",
-          },
-        }}
-      >
-        <Screen name="Home" component={HomeScreen} />
-        <Screen
-          name="Srp"
-          component={Srp}
-          options={({ route }) => ({ title: route.params.address })}
-        />
-        <Screen name="Traveller" component={TravellerInfo} />
-      </Navigator>
-    </NavigationContainer>
+    <CarProvider>
+      <NavigationContainer>
+        <Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#2276e3",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontFamily: "Quicksand-Bold",
+            },
+          }}
+        >
+          <Screen name="Home" component={HomeScreen} />
+          <Screen
+            name="Srp"
+            component={Srp}
+            options={({ route }) => ({ title: route.params.address })}
+          />
+          <Screen name="Traveller" component={TravellerInfo} />
+        </Navigator>
+      </NavigationContainer>
+    </CarProvider>
   );
 }
 let styles = StyleSheet.create({});

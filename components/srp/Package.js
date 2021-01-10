@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image, StyleSheet, View, Text, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { CarContext } from "../../context/CarContext";
 import PackageOffering from "./PackageOffering";
 
 function Package(props) {
   const {
     package: { vendor, base_fare, total_amount, free_kms, offerings },
     navigation,
+    index: carIndex,
+    packageIndex,
   } = props;
+  const { addIndex } = useContext(CarContext);
+  const handlePress = () => {
+    addIndex(carIndex, packageIndex);
+    navigation.navigate("Traveller");
+  };
   return (
     <View style={styles.package_container}>
       <View style={styles.row}>
@@ -41,7 +49,7 @@ function Package(props) {
           keyExtractor={(item, index) => index}
         />
         <View style={styles.book_btn}>
-          <TouchableOpacity onPress={() => navigation.navigate("Traveller")}>
+          <TouchableOpacity onPress={handlePress}>
             <Text style={styles.btn_text}>Book</Text>
           </TouchableOpacity>
         </View>
