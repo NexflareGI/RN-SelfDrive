@@ -16,7 +16,7 @@ function Offering({ item }) {
 
   return (
     <View style={styles.offering_container}>
-      {/* {getImgIcon(item.key)} */}
+      {getImgIcon(item.key)}
       <Text style={styles.offering}>{item.value}</Text>
     </View>
   );

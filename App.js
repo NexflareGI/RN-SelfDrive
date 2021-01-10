@@ -1,33 +1,45 @@
-import { StatusBar } from "expo-status-bar";
+import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { AppLoading } from "expo-app-loading";
 import { getCars } from "./apis/srp";
-import SrpCard from "./components/srp/SrpCard";
+import { useFonts } from "@use-expo/font";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Srp from "./screens/Srp";
+import { StyleSheet } from "react-native";
+import HomeScreen from "./screens/HomeScreen";
+import TravellerInfo from "./screens/TravellerInfo";
 
+const { Screen, Navigator } = createStackNavigator();
 export default function App() {
-  const [cars, setCars] = useState([]);
-  useEffect(() => {
-    getCars()
-      .then((response) => {
-        setCars(response);
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const customFonts = {
+    "Quicksand-Bold": require("./assets/fonts/Quicksand-Bold.ttf"),
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+  };
+
+  const [isLoaded] = useFonts(customFonts);
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={cars}
-        renderItem={({ item }) => <SrpCard car={item} />}
-        ListEmptyComponent={<Text>Empty List</Text>}
-      />
-    </View>
+    <NavigationContainer>
+      <Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#2276e3",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "Quicksand-Bold",
+          },
+        }}
+      >
+        <Screen name="Home" component={HomeScreen} />
+        <Screen
+          name="Srp"
+          component={Srp}
+          options={({ route }) => ({ title: route.params.address })}
+        />
+        <Screen name="Traveller" component={TravellerInfo} />
+      </Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#e1e7ee",
-  },
-});
+let styles = StyleSheet.create({});

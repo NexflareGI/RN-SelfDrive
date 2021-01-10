@@ -1,74 +1,77 @@
-import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
-import { useFonts } from "@use-expo/font";
-import React, { useEffect } from "react";
-import { View, StyleSheet, Image, Text, FlatList } from "react-native";
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import Offering from "./Offering";
 
-function SrpCard({
-  car: {
-    img,
-    brand,
-    model,
-    transmission,
-    seater,
-    fuel_type,
-    vehicle_offerings = [],
-    packages,
-    selected_pkg_index,
-  },
-}) {
-  const customFonts = {
-    "Quicksand-Bold": require("../../assets/fonts/Quicksand-Bold.ttf"),
-    "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
-  };
-
-  const [isLoaded] = useFonts(customFonts);
-  console.log("Img url is ", img);
-
-  if (!isLoaded) return <AppLoading />;
-  return (
-    <View style={styles.card_container}>
-      <View style={styles.card_col}>
-        <View style={styles.car_img_container}>
-          <Image source={{ uri: img }} style={styles.car_img} />
-        </View>
-        <View style={styles.col_1_detail}>
-          <Text style={styles.car_name}>
-            {brand} {model}
-          </Text>
-          <Text style={styles.car_basic}>
-            {transmission} | {seater} | {fuel_type}
-          </Text>
-        </View>
-        <View style={{ marginLeft: "auto", alignContent: "center" }}>
-          <Image
-            style={styles.go_safe_icon}
-            source={require("../../assets/static/icn_gosafe.png")}
-          />
-        </View>
-      </View>
-
-      <View style={styles.card_col}>
-        <View style={styles.offerings}>
-          {vehicle_offerings.length > 0 ? (
-            <FlatList
-              inverted={true}
-              data={vehicle_offerings}
-              renderItem={({ item }) => <Offering item={item} />}
+const SrpCard = React.memo(
+  ({
+    car: {
+      img,
+      brand,
+      model,
+      transmission,
+      seater,
+      fuel_type,
+      vehicle_offerings = [],
+      packages,
+      selected_pkg_index,
+    },
+    navigation,
+  }) => {
+    return (
+      <TouchableOpacity
+        style={styles.card_container}
+        onPress={() => navigation.navigate("Traveller")}
+      >
+        <View style={styles.card_col}>
+          <View style={styles.car_img_container}>
+            <Image source={{ uri: img }} style={styles.car_img} />
+          </View>
+          <View style={styles.col_1_detail}>
+            <Text style={styles.car_name}>
+              {brand} {model}
+            </Text>
+            <Text style={styles.car_basic}>
+              {transmission} | {seater} | {fuel_type}
+            </Text>
+          </View>
+          <View style={{ marginLeft: "auto", alignContent: "center" }}>
+            <Image
+              style={styles.go_safe_icon}
+              source={require("../../assets/static/icn_gosafe.png")}
             />
-          ) : null}
+          </View>
         </View>
-        <View style={styles.price_container}>
-          <Text style={{ fontSize: 11, color: "#777777" }}>Starting From</Text>
-          <Text style={styles.final_price}>
-            {packages[selected_pkg_index].total_amount}
-          </Text>
+
+        <View style={styles.card_col}>
+          <View style={styles.offerings}>
+            {vehicle_offerings.length > 0 ? (
+              <FlatList
+                inverted={true}
+                data={vehicle_offerings}
+                renderItem={({ item }) => <Offering item={item} />}
+              />
+            ) : null}
+          </View>
+          <View style={styles.price_container}>
+            <Text style={{ fontSize: 11, color: "#777777" }}>
+              Starting From
+            </Text>
+            <Text style={styles.final_price}>
+              {packages[selected_pkg_index].total_amount}
+            </Text>
+          </View>
         </View>
-      </View>
-    </View>
-  );
-}
+      </TouchableOpacity>
+    );
+  }
+);
 
 let styles = StyleSheet.create({
   card_container: {
