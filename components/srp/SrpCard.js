@@ -48,7 +48,7 @@ const SrpCard = React.memo((props) => {
 
   const renderInitialOffering = useCallback(() => {
     return (
-      <View style={styles.card_col}>
+      <View style={styles.card_row}>
         <View style={styles.offerings}>
           {vehicle_offerings.length > 0 ? (
             <FlatList
@@ -84,7 +84,7 @@ const SrpCard = React.memo((props) => {
       ]}
       onPress={() => handlePress(index)}
     >
-      <View style={styles.card_col} onStartShouldSetResponder={(event) => true}>
+      <View style={styles.card_row}>
         <View style={styles.car_img_container}>
           <Image source={{ uri: img }} style={styles.car_img} />
         </View>
@@ -123,7 +123,7 @@ let styles = StyleSheet.create({
   card_inactive: {
     backgroundColor: "white",
   },
-  card_col: {
+  card_row: {
     display: "flex",
     flexDirection: "row",
   },

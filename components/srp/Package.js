@@ -48,9 +48,11 @@ function Package(props) {
           renderItem={({ item }) => <PackageOffering offering={item} />}
           keyExtractor={(item, index) => index}
         />
-        <View style={styles.book_btn}>
+        <View style={{ alignSelf: "flex-end", marginLeft: "auto" }}>
           <TouchableOpacity onPress={handlePress}>
-            <Text style={styles.btn_text}>Book</Text>
+            <View style={styles.book_btn}>
+              <Text style={styles.btn_text}>Book</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -92,8 +94,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   book_btn: {
-    alignSelf: "flex-end",
-    marginLeft: "auto",
     backgroundColor: "#ff6d38",
     paddingVertical: 8,
     paddingHorizontal: 28,
