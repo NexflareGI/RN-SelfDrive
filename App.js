@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AppLoading } from "expo-app-loading";
-import { getCars } from "./apis/srp";
 import { useFonts } from "@use-expo/font";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -18,6 +17,7 @@ export default function App() {
   };
 
   const [isLoaded] = useFonts(customFonts);
+
   return (
     <NavigationContainer>
       <Navigator
