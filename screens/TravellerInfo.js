@@ -8,9 +8,6 @@ import { CarContext } from "../context/CarContext";
 
 function TravellerInfo() {
   const [showDetail, setShowDetail] = useState(false);
-  const {
-    carState: { carIndex, packageIndex, cars },
-  } = useContext(CarContext);
   const handleOnPress = () => {
     setShowDetail(!showDetail);
   };

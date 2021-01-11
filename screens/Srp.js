@@ -7,17 +7,18 @@ import BottomFilterContainer from "../components/BottomFilter/BottomFilterContai
 import { CarContext, CarProvider } from "../context/CarContext";
 
 function Srp(props) {
-  const [cars, setCars] = useState([]);
   const [error, setError] = useState("");
   const [activeItem, setActiveItem] = useState();
-  const { addCars } = useContext(CarContext);
+  const { addSrpResponse, srpState, clearSrpResponse } = useContext(CarContext);
   useEffect(() => {
     getCars()
       .then((response) => {
-        addCars(response);
-        setCars(response);
+        addSrpResponse(response);
       })
       .catch((err) => setError(err.message));
+    return () => {
+      clearSrpResponse();
+    };
   }, []);
   const setActive = useCallback((index) => setActiveItem(index), []);
   return (
@@ -27,7 +28,7 @@ function Srp(props) {
       ) : (
         <>
           <FlatList
-            data={cars}
+            data={srpState.cars_filtered}
             renderItem={({ item, index }) => (
               <SrpCard
                 car={item}

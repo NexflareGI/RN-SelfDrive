@@ -12,11 +12,23 @@ import Offering from "./Offering";
 import Package from "./Package";
 
 const SrpCard = React.memo((props) => {
-  const { navigation, isActive, setActive, index } = props;
-
   const {
-    carState: { cars = [] },
-  } = useContext(CarContext);
+    navigation,
+    isActive,
+    setActive,
+    index,
+    car: {
+      img,
+      brand,
+      model,
+      transmission,
+      seater,
+      fuel_type,
+      vehicle_offerings = [],
+      packages = [],
+      selected_pkg_index,
+    },
+  } = props;
 
   const renderPackages = useCallback(() => {
     return (
@@ -33,18 +45,6 @@ const SrpCard = React.memo((props) => {
   const handlePress = useCallback((index) => {
     setActive(index);
   }, []);
-
-  const {
-    img,
-    brand,
-    model,
-    transmission,
-    seater,
-    fuel_type,
-    vehicle_offerings = [],
-    packages = [],
-    selected_pkg_index,
-  } = cars[index] || [];
 
   const renderInitialOffering = useCallback(() => {
     return (

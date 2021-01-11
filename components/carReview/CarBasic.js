@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
 import { CarContext } from "../../context/CarContext";
+import { styles as commonStyle } from "../../util/style";
 
 function CarBasic() {
   const {
-    carState: { cars, carIndex, packageIndex },
+    srpState: { cars_filtered, carIndex, packageIndex, other_cars, logos },
   } = useContext(CarContext);
-  const car = cars[carIndex];
+  const car = cars_filtered[carIndex];
   const { img, brand, model, transmission, seater, fuel_type } = car;
   const carPackage = car.packages[packageIndex];
   return (
@@ -26,15 +27,14 @@ function CarBasic() {
             <Text>Fullfilled by</Text>
             <Image
               source={{
-                uri:
-                  "http://canonprodpp.goibibo.com/static/logos/zoom_logo.png",
+                uri: logos[carPackage.vendor],
               }}
               style={styles.vedor_image_container}
             />
           </View>
         </View>
       </View>
-      <View style={styles.dotted_line} />
+      <View style={commonStyle.dotted_line} />
     </>
   );
 }
@@ -59,12 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     paddingTop: 2,
   },
-  dotted_line: {
-    borderStyle: "dotted",
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: "#eff3f8",
-  },
+
   vedor_image_container: { height: 18, width: 18, marginTop: 4 },
   col_1_detail: {
     paddingLeft: 11,

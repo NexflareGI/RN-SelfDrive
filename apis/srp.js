@@ -16,7 +16,7 @@ export const getCars = async () => {
   };
   try {
     let response = await fetch(
-      "http://192.168.0.134:8000/v1/search/cars/?price=low",
+      "http://192.168.0.133:8000/v1/search/cars/?price=low",
       {
         method: "POST",
         mode: "cors", // no-cors, *cors, same-origin
@@ -30,10 +30,7 @@ export const getCars = async () => {
     );
     let responseData = await response.json();
     if (responseData.code == "200") {
-      let {
-        response: { cars_filtered },
-      } = responseData;
-      return cars_filtered;
+      return responseData.response;
     } else {
       throw new Error(responseData.error.msg);
     }

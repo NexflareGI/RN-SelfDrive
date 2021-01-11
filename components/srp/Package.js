@@ -11,7 +11,7 @@ function Package(props) {
     index: carIndex,
     packageIndex,
   } = props;
-  const { addIndex } = useContext(CarContext);
+  const { addIndex, srpState: { logos = {} } = {} } = useContext(CarContext);
   const handlePress = () => {
     addIndex(carIndex, packageIndex);
     navigation.navigate("Traveller");
@@ -21,7 +21,7 @@ function Package(props) {
       <View style={styles.row}>
         <Image
           source={{
-            uri: "http://canonprodpp.goibibo.com/static/logos/zoom_logo.png",
+            uri: logos[vendor],
           }}
           style={styles.vendor_logo}
         />

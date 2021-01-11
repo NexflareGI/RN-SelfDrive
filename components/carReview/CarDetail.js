@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import { CarContext } from "../../context/CarContext";
+import { styles as commonStyle } from "../../util/style";
 
 function CarDetail() {
   const {
-    carState: { cars, carIndex, packageIndex },
+    srpState: { cars_filtered, carIndex, packageIndex, other_cars },
   } = useContext(CarContext);
-  const { packages, home_delivery } = cars[carIndex];
+  const { packages, home_delivery } = cars_filtered[carIndex];
   const { base_fare, total_amount, excess_kms_charges, free_kms } = packages[
     packageIndex
   ];
@@ -32,6 +33,7 @@ function CarDetail() {
       <RenderDetail heading="Included Kms" value={`${free_kms} kms`} />
       <View style={styles.divider}></View>
       <RenderDetail heading="Extra Kms" value={`${excess_kms_charges}/km`} />
+      <View style={commonStyle.dotted_line} />
     </View>
   );
 }
