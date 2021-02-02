@@ -34,7 +34,7 @@ const SrpCard = React.memo((props) => {
     return (
       <FlatList
         data={packages}
-        keyExtractor={(item) => String(item.pricing_id)}
+        keyExtractor={(item) => String(item.gds_hash)}
         renderItem={({ item, index }) => (
           <Package package={item} {...props} packageIndex={index} />
         )}

@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import SrpCard from "../components/srp/SrpCard";
 import { getCars } from "../apis/srp";
 import ErrorBottomSheet from "../components/error/ErrorBottomSheet";
-import BottomFilterContainer from "../components/BottomFilter/BottomFilterContainer";
+import BottomNavContainer from "../components/common/BottomNavContainer";
 import { CarContext, CarProvider } from "../context/CarContext";
 
 function Srp(props) {
@@ -40,7 +40,7 @@ function Srp(props) {
             )}
             ListEmptyComponent={<Text>Empty List</Text>}
           />
-          <BottomFilterContainer />
+          <BottomNavContainer />
         </>
       )}
     </View>

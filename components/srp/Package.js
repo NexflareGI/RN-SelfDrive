@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Image, StyleSheet, View, Text, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CarContext } from "../../context/CarContext";
+import Button from "../common/Button";
 import PackageOffering from "./PackageOffering";
 
 function Package(props) {
@@ -49,11 +50,7 @@ function Package(props) {
           keyExtractor={(item, index) => index}
         />
         <View style={{ alignSelf: "flex-end", marginLeft: "auto" }}>
-          <TouchableOpacity onPress={handlePress}>
-            <View style={styles.book_btn}>
-              <Text style={styles.btn_text}>Book</Text>
-            </View>
-          </TouchableOpacity>
+          <Button text="Book" onPress={handlePress} />
         </View>
       </View>
     </View>
